@@ -1,0 +1,16 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: counter
+  labels:
+    app: counter
+spec:
+  template:
+    metadata:
+      labels:
+        app: counter
+    spec:
+    restartPolicy: OnFailure
+      containers:
+      - name: counter
+        image: mohamadmokhtar/library:count

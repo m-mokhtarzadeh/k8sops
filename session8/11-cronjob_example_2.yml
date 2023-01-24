@@ -1,0 +1,18 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: every-one-min-job
+spec:
+  schdule: "*/1 * * * *"
+  jobTemplate:
+    completions: 5
+    parallelism: 2
+    template:
+    metadata:
+      labels:
+      app: counter
+    spec:
+      restartPolicy: OnFailure # optional default is Always, available options Always, Never, OnFailure
+      containers:
+      - name: counter
+        image: mohamadmokhtar/library:count

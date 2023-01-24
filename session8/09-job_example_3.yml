@@ -1,0 +1,18 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: counter-comlete-parall
+  labels:
+    app: counter
+spec:
+  parallelism: 3
+  completions: 5
+  template:
+    metadata:
+      labels:
+        app: counter
+    spec:
+    restartPolicy: OnFailure
+      containers:
+      - name: counter
+        image: mohamadmokhtar/library:count

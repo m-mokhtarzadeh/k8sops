@@ -1,0 +1,24 @@
+# apply label with following example
+# kubectl label node < node name > disk-type=ssd
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: monitor
+  labels:
+    app: monitor
+spec:
+  selector:
+    matchLabels:
+      app: monitor
+  template:
+    metadata:
+      labels:
+        app: monitor
+    spec:
+      containers:
+      - name: monitor
+        image: mohamadmokhtar/library:monitor
+        imagePullPolicy: IfNotPresent
+      # changed from second example
+      nodeSelector:
+        disk-type: ssd
