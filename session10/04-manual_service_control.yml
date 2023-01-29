@@ -1,0 +1,2 @@
+##### Remove pod from list ###
+kubectl label pod <pod name> enabled=false

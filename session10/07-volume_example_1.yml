@@ -1,0 +1,30 @@
+##### EmptyDir Example ####
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+        volumeMounts:
+          - mountPath: /data
+            name: data-volume
+      volumes:
+        - name: data-volume
+          emptyDir:
+            sizeLimit: 500Mi
