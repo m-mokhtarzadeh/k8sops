@@ -1,4 +1,4 @@
-##### EmptyDir Example ####
+##### NFS Example ####
 apiVersion: apps/v1
 kind: ReplicaSet
 metadata:
@@ -26,5 +26,7 @@ spec:
             name: data-volume
       volumes:
         - name: data-volume
-          emptyDir:
-            sizeLimit: 500Mi
+          nfs:
+            server: 192.168.2.251
+            path: /nfs-share
+            readOnly: false

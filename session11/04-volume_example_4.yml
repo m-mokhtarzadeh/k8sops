@@ -1,0 +1,66 @@
+##### CM Example ####
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config
+data:
+  example.conf: |
+    server {
+        listen       8080;
+        listen  [::]:8080;
+        server_name  localhost;
+
+        location / {
+            root   /usr/share/nginx/html;
+            index  index.html index.htm;
+        }
+
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   /usr/share/nginx/html;
+        }
+    }
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-env
+data:    
+  db_enable: 'false'    
+---
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+        env:
+          - name: DB_ENABLED
+            valueFrom:
+              configMapKeyRef:
+                name: nginx-env
+                key: db_enable
+        volumeMounts:
+          - mountPath: /etc/nginx/conf.d
+            name: nginx-config
+      volumes:
+        - name: nginx-config
+          configMap:
+            name: nginx-config

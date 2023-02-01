@@ -1,0 +1,67 @@
+##### PVC Example ####
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: manual
+provisioner: kubernetes.io/no-provisioner
+allowVolumeExpansion: true
+...
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: volume
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/data"
+...
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: claim
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 3Gi
+...
+---
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+        volumeMounts:
+          - mountPath: /data
+            name: data-volume
+      volumes:
+        - name: data-volume
+          persistentVolumeClaim:
+            claimName: claim
+...
