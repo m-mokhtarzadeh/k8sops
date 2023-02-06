@@ -1,0 +1,136 @@
+##### Projected Example ####
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config
+data:
+  example.conf: |
+    server {
+        listen       8080;
+        listen  [::]:8080;
+        server_name  localhost;
+
+        location / {
+            root   /usr/share/nginx/html;
+            index  index.html index.htm;
+        }
+
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   /usr/share/nginx/html;
+        }
+    }
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: nginx-ssl
+data:
+  ssl.key: |
+    LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JSUpRZ0lCQURBTkJna3Foa2lHOXcwQkFRRUZB
+    QVNDQ1N3d2dna29BZ0VBQW9JQ0FRREhkRnpDOW4rc1YyMHkKYWRBYSttZWxpWm9aVElkNjU5dGZs
+    UVdUSCtCNHlCZENVeVhpSC8zVFFXQWhWcmFDVDlnL29VcEVITWVjcmhyOApYZVJUa3FjL3l1RWp2
+    UlJKb09kMkhocW9LOGZTRWZUZUkrTTZ4WXc4ZDV1VENyN0FxV2ZJOEhYMy9EUElkWG43CnBleEZH
+    clZveHl6VHNtMjdkUVR1U0ZNa3VEb1BoNHBhaXQxeldVejZKMS9DZ0JFM05xQllESUQvRTd4Z0xD
+    dEQKTEZsOWxGQVdKMnJ1S3ZVLytGU2tuZ1JUTnZIcWVZZTBQWnZkQ0sxS01zTmplUUx3ZlhGT1ZW
+    WXVQOFMvRmNFNQozcGZJay84eGdKSkRXSE0rNXRZS3FIaTU3QkJLcWhYYTNka0xXUUxMT0FZQVhK
+    eENxbktOMXVlM3ZNY2JMa1hVCktqQkgxZDBNeGR1YklNMnpxSTRXV2UyVFZ5RkFVeGo4MVU3SGZr
+    VCtVVGYzMzdUZkJaNFJQOWI1RnRBQlBqc2oKWmo5V3VNR2pleTNtS1cvWVp4bS9wOGhiL3lEMjB0
+    YXNYUW1KQWpmaGhmMWZ5YThvYzV0ZGxVbStVOGcxYW84VgpMTWg4L1k3ZjlzVmQzNEFXV3l6Mmg2
+    ajY5S1p5UStXT3ZWOUtWOWQ0VEljWFltaGFXdyt1Uyt2bTJhSDk1eGFmCldIQ2Z6bHN4WXJHVXFB
+    U0krSjVNcnFXdlJOeXBneFhPL1M4M1JrTzRzbjNIbnpoRVlWakptUFRaZVlUSnZrZ0EKVTFXVnUz
+    TXFkSk92eXliVS96UUh4bWo1cHQ0Z2EvYzRvejkvT2MvbVA2Um9ITVZRNXdud3dONmcxeWFMN2Vs
+    WAozMlRvT3dFSFdEU3VNcWhTTGFyY2pmb2pMaUtXeHdJREFRQUJBb0lDQUVLOFJHMVhYTkNsVC93
+    V08zTkxaWEtWCjMrR25JWTJXRm1pY3pBaTJHYjFQOWJoVGFkR0hNcjZFbVUyT1hmS3NGSWIxeUl1
+    UnRaaFBDT2gzNGZXMGxCRmMKS0loMHMxMFBZV0s4SDk4MUJ0N2E4enVBZG44cnFnaHhYTFNPVzlU
+    SzJkYjUzZjdqZTlBT3ZvbmNzbmxNdm5ZWQpibjlHckVDVW50bTdpVlkzN2ZWVVBJNmUrQW1vVDRG
+    RHUxNnd5eEhXVFVBb3J1Q3FFZFY3OGQyLzhSRjdsbkJUCk1Bd1FnNDZyNEdaVUdNNWZEQUtRTnor
+    dmZYOHZjQXZyZ0VUQU1LT1cxVnFJWXhXR2NLWWUrVkFMa20yaVZ6aVEKOUY5a01PdFRBVHIvczZW
+    QnZ4RzhaeU9jSndzTTlVcFpyR2hpbEVZYUVjb3pwY1JzZlpJeW9WcWo0eE9tRXhlagpRM1I5NVdH
+    TkJxeUxpNkQvNkNxcVdORzNic3RHbkVMaVBaV3BXNkYrUm8rV0ZuL0svaHZHZ0w4dGJTSGxoMGdQ
+    CkdnU2ozTGd4NHZROGtmM1dWbDRCTVZYRzhQc0t4MVVNOEJMb3F5YVV5Q1YyUzlsaUp4K2ZFbVVQ
+    U1dmaU5rUW4KVmxGUjBQbGdKSC9JTWhEUmNHaXY4eUNFRWQ2eEdmcFMyK2F3TVBOLzdZbi9lMmpv
+    cUhjT3NZZFJOQytRVXN4UwpsTGt2ZTlaS0JhZEUzYXU1QmRPRkowVUd1YVp6azNhUDI5VUQvVmVo
+    Y1pIL3RRUnhzVXZUVm4rc05QUGlqeEp4CmJ5b1pCLzNLWlNnSzRMc0hkYjBTbTBydGF0WFJXQmdO
+    eVRqTENFbGIyZmtRZS9DMkdxZWQrUitwVFdDZytiVjMKaksxM2k0bk1qbWRSSGtYdDh6NUJBb0lC
+    QVFEMVFacDBHRzVPa0dRYWZ1NkRNdXh1YXFyK3ZHanhaNG9ETzFjMwpwRkt1UlNsUDlRbzJ2YTRP
+    eXZkQVgxS0RtWUZUZEJKcVV5KzA5M3A3RDRsdlpNSnNXMDladWM4UW9xWXU5NVdkCmNEQmxUbjZP
+    N004RnpKMGRUOGFPZjRJTUJjK0lwNDRTaC9QeXB4Nk0rSFY0MTR3RFpSbzYyY0xiTmgrOER1dnMK
+    RmlXMUFleXRZdnl1OTgrbm1tVHZJRVRVMVlzSkVLdTJWM2JTS3hjRytVZ2hKbU5ZSFpFMFBpL3Zv
+    ZDhZd25naQpNcGR6dkpMREFLSUIrM1RSbGZNbUg3L2tWYkt0WllsYWZ0TFNHK1N0TmNEWURxU2ps
+    N3llaGxiUUU5RmZ6TmJUCm04V0JSajJScHBqeXVtZER4Z3pJMExPL0ZZamFPT0x5UjNGc3lSWWtV
+    a0JTSFkvbEFvSUJBUURRTVI4RFE4enYKYkVKdEdlRk91OTBRUWFiclpLcXk0Z05uMmlwVjNFNWxv
+    dWFyS2o4dHpWRzdBMlI4eHVhUjRzU1hONWF3bnA2ZwpFbEpCZWdncTBWcmloUzZYYy9EcERsNkFK
+    cExmbHd6NlBDQ0RsNjlaN24rcWh1VGZyanRZU3hGa1g5WGVzQmFnCmxlaWtkb0trRER4ejZ6T3p0
+    cmVOSjFSOTUzcjlBTkJzZ21MYlJkbjJLT3hSNEtjWDFNaGlBVmlVMUd1K1Y3dUEKejlnS3pZMUNz
+    NXNmdXNMT0dBSU1GRlJJNm1zNnJ0NHBqb25CeXJNN2drTTM4aTRGUnFWSG41cXoxQk1hek9uMQpa
+    VUVVRGVOQkhuR3hIT3ZtTlc1UmVkallXdjQ2M0Nrd2ZWQ2ZWR2pRWlhIOVdIYXRFMHVTZnB5ay81
+    Q01sQXNuCmhidjFOK293UCtrN0FvSUJBSDJhNTV0bGw3aXN3bGUvZ2krM09OY2owZ2M4UHhMRFVD
+    OXZpSzk2Zk0yN3BmakoKS2ozMnp0bk1vT3hhNVV0NHBuOHpCdXRsUngyTFVUTU5OZm5TeEsveDQ2
+    VzBQNVBwZU9xODZlY0R1Z1ZvT2ZEQQozeFc5UVFudC9XYWxidGp4Y09Rdnk5YzV3WG9ZbE5EbHZt
+    UHhJRWZzMDQ0b1VGOHNUUHhuTi9SbE0xS01kY1ltCjEvcFQrQW1DVFFjYW82WE01N1B3MGNCRTh4
+    bVg3K2NtYkFadVBwcTJLZE56dGVFb0tiWG9ndFlneXVmL1A3cVcKN0dIUGduaUVMMDdyRzcrNUZC
+    VXgxeko5bVVMNS9oZW5XK2hMTjQ2QSs1ekVlRm1Bak01ZmZmWko1TkRjUkZQLwoybjBWY2lXSG5L
+    eU1Ga0phcVFmNThtRGFyZ0JreSs0MkliTHNhUEVDZ2dFQkFJL2FvVGM4VGdyUm4wU0xzV2NaCjRE
+    SXZhd3NUeis4eXhHK3FDNzZ3TDJ1REdDZ0ZWUXBzNktCMFE2Y0VPS1Z0TDdIZE16NXZHK1EzUktj
+    Qmowc20KeGNubmhMNFoyc2p1cU5XYjBiaTFRcjVWZFpIMzZhNFdZaGlPaE84YUVOOTlYMU1mOVVP
+    ZUlNUnRVUWJ5N0dvMgpHajl1c1pib0ZnUnV2SzhTbDZUaVB5SDdKaHVsTkdvbTlNUE9teWFZWEsx
+    N2lKMnQrWlRZUWpOTGFsaHNsOE1UCkg0alpIMm9RcExsOEFwRXZpVkJQTEN0QzFtVVZqcXI3NHo1
+    eEZPT0lZUVFRZ0hEcGhSbnJwVzF1dlgwQjY1ay8KVkFleG1EN0ZoS2kvck5veVphQitKK2ZkYnl2
+    b3cxUGNCTnV0bUxNV3RnMVBkeVY3Z1lIaGVhT2hnTEo4SkZHYQpsNmtDZ2dFQUIzSnM1UXdJeGlY
+    cE1aaHpybEtxekF0UWdUWGVkY29NdS9qT3NUSDcrWXp6ZXZmY0V4UGFvdzVXClRuMHI3SFQrRlJ1
+    UUVKTFd5anJrb3NwNkp3M3JTNE00WkhJY2dmVVpsdDFSRVR5UFgxbncyM0tJc2tnYVB6Q24KWUtS
+    TG9IQTRiZHlTenNNbnhxMWN4RUxLdG9uYmg4Ry9UZnNEWEI0NG1EZUR6bEJPS0VGU2JLMzdMVFpE
+    amQwdQpnWFZWaTZVcGIxNjdDYVQrOG1LaGY1N0IwZVJocmdFczVSZGFPNC9SeFdZTkJaQk1ZOTBV
+    bEZEeURHVmFRQXdZCmlxcjFVZjdtU0haaElES2QrUE1odEFPQ3BLWGl0c1VoTGZMZDdSakR1UGdP
+    MGJoejVEazhuQXY4QU1LSzJ4aFYKUjN1UjVKeHVubFNXeUdYOU1CeWd4bGJncXJrcE5BPT0KLS0t
+    LS1FTkQgUFJJVkFURSBLRVktLS0tLQo=
+---
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+        volumeMounts:
+          - mountPath: /etc/projectd
+            name: all-in-one
+      volumes:
+        - name: all-in-one
+          projected:
+            sources:
+              - secret:
+                  name: nginx-ssl
+                  items:
+                    - key: ssl.key
+                      path: priv.key
+              - downwardAPI:
+                  items:
+                    - path: "labels"
+                      fieldRef:
+                        fieldPath: metadata.labels
+                    - path: "annotations"
+                      fieldRef:
+                        fieldPath: metadata.annotations
+              - configMap:
+                  name: nginx-config
+                  items:
+                    - key: example.conf
+                      path: nginx-config/nginx.conf
