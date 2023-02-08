@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: server-v1
+  labels:
+    app: server-v1
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: server-v1
+  template:
+    metadata:
+      labels:
+        app: server-v1
+        ver: v1
+    spec:
+      containers:
+      - name: server
+        image: mohamadmokhtar/library:go-http-server-v1
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+          name: http
+        env:
+         - name: SERVER_PORT
+           value: "80"
+        readinessProbe:
+          httpGet:
+            port: 80
+            path: /healthz
+          initialDelaySeconds: 2
+          periodSeconds: 1
