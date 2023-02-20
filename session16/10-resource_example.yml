@@ -1,0 +1,20 @@
+## Guaranteed
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: server
+  labels:
+    app: server
+spec:
+  containers:
+  - name: server
+    image: mohamadmokhtar/library:go-http-server-v4
+    imagePullPolicy: IfNotPresent
+    resources:
+      requests:
+        cpu: 100m
+        memory: 20Mi
+      limits:
+        cpu: 100m
+        memory: 20Mi

@@ -1,0 +1,13 @@
+## BestEffort
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: server
+  labels:
+    app: server
+spec:
+  containers:
+  - name: server
+    image: mohamadmokhtar/library:go-http-server-v4
+    imagePullPolicy: IfNotPresent
