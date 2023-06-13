@@ -1,0 +1,49 @@
+yum install --disablerepo=kubernetes nfs-utils iscsi-initiator-utils
+containerd config default > /etc/containerd/config.toml
+systemctl enable --now containerd
+
+cat > kubeinit-config.yml <<EOF
+---
+apiVersion: kubeadm.k8s.io/v1beta3
+kind: InitConfiguration
+localAPIEndpoint:
+  advertiseAddress: 192.168.2.251
+  bindPort: 6443
+nodeRegistration:
+  criSocket: "/run/containerd/containerd.sock"
+...
+---
+apiVersion: kubeadm.k8s.io/v1beta3
+kind: ClusterConfiguration
+kubernetesVersion: 1.23.15
+controlPlaneEndpoint: "192.168.2.251:6443"
+...
+---
+apiVersion: kubeproxy.config.k8s.io/v1alpha1
+kind: KubeProxyConfiguration
+mode: ipvs
+...
+EOF
+
+kubeadm init --config kubeinit-config.yml
+kubectl taint node master1 node-role.kubernetes.io/master:NoSchedule- 
+
+vim /etc/sysconfig/kubelet
+KUBELET_EXTRA_ARGS=--node-ip 192.168.2.251
+systemctl restart kubelet
+
+
+## worker1
+yum install --disablerepo=kubernetes nfs-utils iscsi-initiator-utils
+containerd config default > /etc/containerd/config.toml
+sed -i "s/registry.k8s.io/registry.mmokhtar.ir\/library/g" /etc/containerd/config.toml
+systemctl enable --now containerd
+systemctl restart containerd
+crictl -r unix:///run/containerd/containerd.sock ps
+
+vim /etc/sysconfig/kubelet
+KUBELET_EXTRA_ARGS=--node-ip 192.168.2.252
+
+kubeadm join 192.168.2.251:6443 --token irehx9.73wzr4v266uuf76u \
+--discovery-token-ca-cert-hash sha256:a460e68dac0b99724da77a478cb35d27d9c982227032d5aca3d5158c66524d96 \
+--cri-socket unix:///run/containerd/containerd.sock

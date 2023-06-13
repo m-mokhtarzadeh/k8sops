@@ -1,0 +1,5 @@
+# git clone -b v5.0.1 https://github.com/kubernetes-csi/external-snapshotter.git
+# cd external-snapshotter
+# kubectl create -k client/config/crd
+# sed -i "s/gcr.io\/k8s-staging-sig-storage\/snapshot-controller:v5.0.0/registry.mmokhtar.ir\/library\/k8s-staging-sig-storage\/snapshot-controller:v5.0.0/g" deploy/kubernetes/snapshot-controller/setup-snapshot-controller.yaml
+# kubectl create -k deploy/kubernetes/snapshot-controller

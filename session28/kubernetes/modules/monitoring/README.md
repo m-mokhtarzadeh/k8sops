@@ -1,0 +1,11 @@
+docker.io/grafana/grafana:9.5.2
+docker.io/bats/bats:v1.4.1
+docker.io/busybox:1.31.1
+quay.io/prometheus/node-exporter:v1.5.0
+quay.io/kiwigrid/k8s-sidecar:1.24.3
+quay.io/prometheus-operator/prometheus-operator:v0.65.1
+quay.io/prometheus-operator/prometheus-config-reloader:v0.65.1
+quay.io/prometheus/alertmanager:v0.25.0
+quay.io/prometheus/prometheus:v2.44.0
+registry.k8s.io/kube-state-metrics/kube-state-metrics:v2.8.2
+registry.k8s.io/ingress-nginx/kube-webhook-certgen:v20221220-controller-v1.5.1-58-g787ea74b6

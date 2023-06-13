@@ -1,0 +1,34 @@
+defaultSettings:
+  defaultReplicaCount: "1"
+  replicaSoftAntiAffinity: "true"
+  
+persistence:
+  defaultClassReplicaCount: "1"
+
+image:
+  longhorn:
+    engine:
+      repository: registry.mmokhtar.ir/library/longhornio/longhorn-engine
+    manager:
+      repository: registry.mmokhtar.ir/library/longhornio/longhorn-manager
+    ui:
+      repository: registry.mmokhtar.ir/library/longhornio/longhorn-ui
+    instanceManager:
+      repository: registry.mmokhtar.ir/library/longhornio/longhorn-instance-manager
+    shareManager:
+      repository: registry.mmokhtar.ir/library/longhornio/longhorn-share-manager
+    backingImageManager:
+      repository: registry.mmokhtar.ir/library/longhornio/backing-image-manager
+  csi:
+    attacher:
+      repository: registry.mmokhtar.ir/library/longhornio/csi-attacher
+    provisioner:
+      repository: registry.mmokhtar.ir/library/longhornio/csi-provisioner
+    nodeDriverRegistrar:
+      repository: registry.mmokhtar.ir/library/longhornio/csi-node-driver-registrar
+    resizer:
+      repository: registry.mmokhtar.ir/library/longhornio/csi-resizer
+    snapshotter:
+      repository: registry.mmokhtar.ir/library/longhornio/csi-snapshotter
+    livenessProbe:
+      repository: registry.mmokhtar.ir/library/longhornio/livenessprobe

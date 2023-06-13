@@ -1,0 +1,16 @@
+---
+volumeClaimTemplate:
+  resources:
+    requests:
+      storage: 10Gi
+image: registry.mmokhtar.ir/library/elasticsearch/elasticsearch
+esConfig:
+  elasticsearch.yml: |
+    ingest.geoip.downloader.enabled: false
+
+extraEnvs:
+  - name: ELASTIC_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: elastic-credentials
+        key: password

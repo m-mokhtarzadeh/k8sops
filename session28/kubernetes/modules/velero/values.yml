@@ -1,0 +1,41 @@
+image:
+  repository: registry.mmokhtar.ir/library/velero/velero
+  tag: v1.11.0
+configuration:
+  features: EnableCSI
+  backupStorageLocation:
+    - name: default
+      provider: aws
+      bucket: k8sops-velero
+      config:
+        region: 'minio'
+        s3ForcePathStyle: true
+        s3Url: 'http://minio.minio.svc:9000'
+  volumeSnapshotLocation:
+    - name: volume
+      provider: aws
+      bucket: k8sops-velero
+      config:
+        region: 'minio'
+        s3ForcePathStyle: true
+        s3Url: 'http://minio.minio.svc:9000'
+
+initContainers:
+  - name: velero-plugin-for-csi
+    image: "registry.mmokhtar.ir/library/velero/velero-plugin-for-csi:v0.5.0"
+    imagePullPolicy: IfNotPresent
+    volumeMounts:
+      - mountPath: /target
+        name: plugins
+  - name: "velero-plugin-for-aws"
+    image: "registry.mmokhtar.ir/library/velero/velero-plugin-for-aws:v1.6.2"
+    volumeMounts:
+      - name: "plugins"
+        mountPath: "/target"
+
+deployNodeAgent: true
+kubectl:
+  image:
+    repository: registry.mmokhtar.ir/library/bitnami/kubectl
+    tag: 1.23
+
