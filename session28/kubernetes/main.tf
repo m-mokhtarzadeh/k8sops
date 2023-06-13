@@ -22,6 +22,10 @@ terraform {
       source = "hashicorp/helm"
 			version = "2.10.1"
 		}
+    htpasswd = {
+      source = "loafoe/htpasswd"
+      version = "1.0.1"
+    }
   }
 }
 
@@ -60,6 +64,10 @@ module "elasticsearch" {
 module "monitoring" {
   depends_on = [module.longhorn]
   source = "./modules/monitoring"
+}
+
+module "nginx" {
+  source = "./modules/nginx-ingress"
 }
 
 output "grafana_admin_dashboard_password" {
